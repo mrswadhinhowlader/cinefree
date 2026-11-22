@@ -1,0 +1,24 @@
+// Local Workers preview (workerd) for the real deployment shape.
+// Runs the bundled Worker with a local D1 database and the development auth client.
+{
+  "name": "cinefree-local",
+  "main": "dist/worker.js",
+  "compatibility_date": "2026-11-20",
+  "assets": {
+    "directory": "./dist/site",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cinefree-local",
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "vars": {
+    "FREEBUFF_CLIENT_ID": "6f07a687-c1f3-4f59-8303-faf3f7ae7759",
+    "FREEBUFF_ISSUER": "https://freebuff.com/oidc",
+    "APP_ORIGIN": "http://localhost:8787"
+  }
+}

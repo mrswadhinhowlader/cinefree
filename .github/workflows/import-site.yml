@@ -1,0 +1,103 @@
+name: Import site files
+
+# One-time import: copies the deployed site (pages, scripts, styles, images)
+# from the live CineFree deployment into the repository, commits them and then
+# deletes itself, so the repo is left with ordinary files only.
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download the site files
+        run: |
+          set -euo pipefail
+          base=https://cinefree-04fpmp.freebuff.site
+          while IFS= read -r path; do
+            [ -z "$path" ] && continue
+            mkdir -p "$(dirname "$path")"
+            curl -fsSL --retry 3 "$base/$path" -o "$path"
+          done <<'FILES'
+          index.html
+          review.html
+          compare.html
+          bangladesh.html
+          india.html
+          usa.html
+          uk.html
+          canada.html
+          australia.html
+          europe.html
+          styles.css
+          app.js
+          favorites.js
+          analytics.js
+          ratings.js
+          pwa.js
+          data.js
+          data-en.js
+          i18n.js
+          theme.js
+          review.js
+          share.js
+          compare.js
+          compare-page.js
+          country.js
+          favicon.svg
+          favicon.ico
+          sitemap.xml
+          robots.txt
+          manifest.webmanifest
+          sw.js
+          assets/hero.jpg
+          assets/share-image.jpg
+          assets/icons/icon-192.png
+          assets/icons/icon-512.png
+          assets/icons/icon-maskable-512.png
+          assets/logos/logos.js
+          assets/logos/airtel-xstream.png
+          assets/logos/arte.png
+          assets/logos/bangla-tv-live.png
+          assets/logos/bioscope.png
+          assets/logos/cbc-gem.png
+          assets/logos/crunchyroll-free.png
+          assets/logos/internet-archive.png
+          assets/logos/jiohotstar.png
+          assets/logos/muse-asia.png
+          assets/logos/mx-player.png
+          assets/logos/plex.png
+          assets/logos/pluto.png
+          assets/logos/popcornflix.png
+          assets/logos/rakuten-tv-free.png
+          assets/logos/retrocrush.png
+          assets/logos/roku-channel.png
+          assets/logos/sbs-on-demand.png
+          assets/logos/sonyliv.png
+          assets/logos/toffee.png
+          assets/logos/tubi.png
+          assets/logos/viki.png
+          assets/logos/vudu-free.png
+          assets/logos/youtube-free.png
+          assets/logos/zee5-free.png
+          FILES
+
+      - name: Commit the site files and retire this workflow
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -q --ignore-unmatch .github/workflows/import-site.yml
+          git add -A
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+            exit 0
+          fi
+          git commit -m "Add the CineFree site files (pages, scripts, styles, images)"
+          git push
