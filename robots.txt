@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cinefree-04fpmp.freebuff.site/sitemap.xml

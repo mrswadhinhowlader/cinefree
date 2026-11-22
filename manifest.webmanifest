@@ -1,0 +1,19 @@
+{
+  "name": "CineFree — free streaming directory",
+  "short_name": "CineFree",
+  "description": "A hand-picked directory of legal, genuinely free movie, series and live TV services, with reviews and visitor ratings.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a0c11",
+  "theme_color": "#0a0c11",
+  "lang": "bn",
+  "dir": "ltr",
+  "categories": ["entertainment", "video"],
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

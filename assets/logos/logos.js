@@ -1,0 +1,27 @@
+/* auto-generated: local logo files */
+const LOGOS = {
+  "retrocrush": "retrocrush.png",
+  "internet-archive": "internet-archive.png",
+  "popcornflix": "popcornflix.png",
+  "toffee": "toffee.png",
+  "crunchyroll-free": "crunchyroll-free.png",
+  "plex": "plex.png",
+  "arte": "arte.png",
+  "viki": "viki.png",
+  "roku-channel": "roku-channel.png",
+  "vudu-free": "vudu-free.png",
+  "pluto": "pluto.png",
+  "youtube-free": "youtube-free.png",
+  "tubi": "tubi.png",
+  "sbs-on-demand": "sbs-on-demand.png",
+  "rakuten-tv-free": "rakuten-tv-free.png",
+  "jiohotstar": "jiohotstar.png",
+  "cbc-gem": "cbc-gem.png",
+  "muse-asia": "muse-asia.png",
+  "sonyliv": "sonyliv.png",
+  "bangla-tv-live": "bangla-tv-live.png",
+  "mx-player": "mx-player.png",
+  "zee5-free": "zee5-free.png",
+  "airtel-xstream": "airtel-xstream.png",
+  "bioscope": "bioscope.png"
+};
