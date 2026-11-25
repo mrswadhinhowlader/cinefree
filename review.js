@@ -30,6 +30,48 @@
   const service = CF.service(base);
   document.title = `${service.name} — ${t("review_meta")} | CineFree`;
 
+  /* ---------- per-review SEO: canonical, og:url, title and description ---------- */
+  (function () {
+    const canonical = location.origin + "/review?id=" + encodeURIComponent(base.id);
+    const desc = `${service.name}: ${service.tagline} ${service.availability}.`;
+
+    function setMeta(selector, create) {
+      let el = document.head.querySelector(selector);
+      if (!el) {
+        el = create();
+        document.head.appendChild(el);
+      }
+      return el;
+    }
+
+    const link = setMeta('link[rel="canonical"]', () => {
+      const l = document.createElement("link");
+      l.rel = "canonical";
+      return l;
+    });
+    link.href = canonical;
+
+    setMeta('meta[name="description"]', () => {
+      const m = document.createElement("meta");
+      m.name = "description";
+      return m;
+    }).content = desc;
+
+    [
+      ['meta[property="og:url"]', "property", "og:url", canonical],
+      ['meta[property="og:title"]', "property", "og:title", document.title],
+      ['meta[property="og:description"]', "property", "og:description", desc],
+      ['meta[name="twitter:title"]', "name", "twitter:title", document.title],
+      ['meta[name="twitter:description"]', "name", "twitter:description", desc],
+    ].forEach(([selector, attr, key, value]) => {
+      setMeta(selector, () => {
+        const m = document.createElement("meta");
+        m.setAttribute(attr, key);
+        return m;
+      }).setAttribute("content", value);
+    });
+  })();
+
   const url = SERVICE_URLS[base.id] || "#";
   const logoFile = typeof LOGOS !== "undefined" ? LOGOS[base.id] : null;
   const parts = base.color.split(",").map((c) => c.trim());

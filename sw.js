@@ -2,7 +2,7 @@
    - pages: network first, cached directory when offline
    - static files: cached copy first, refreshed in the background
    - API calls are never cached (favourites, ratings and the counter stay live) */
-var CACHE = "cinefree-v4";
+var CACHE = "cinefree-v5";
 
 var CORE = [
   "/",

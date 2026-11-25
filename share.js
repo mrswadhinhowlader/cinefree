@@ -65,7 +65,7 @@
   }
 
   function reviewUrl(id) {
-    return new URL("review.html?id=" + encodeURIComponent(id), location.href).href;
+    return new URL("review?id=" + encodeURIComponent(id), location.href).href;
   }
 
   window.CFShare = function (id, allowNative) {

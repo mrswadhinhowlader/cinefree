@@ -28,6 +28,7 @@ const EN_SERVICES = {
     bestFor: "One app for every device",
   },
   "youtube-free": {
+    name: "YouTube (Free movies)",
     availability: "Almost every country, works without an account",
     tagline: "Where everyone already is — an official free-movies shelf plus studio channels.",
     review:
@@ -82,6 +83,7 @@ const EN_SERVICES = {
     bestFor: "Free anime with a clear conscience",
   },
   sonyliv: {
+    name: "SonyLIV (free section)",
     availability: "India — limited free section",
     tagline: "Indian TV shows and some films, free with ads.",
     review:
@@ -145,6 +147,7 @@ const EN_SERVICES = {
     bestFor: "New Bangladeshi releases",
   },
   "zee5-free": {
+    name: "ZEE5 (free section)",
     availability: "India — limited free section",
     tagline: "A big Hindi TV and film catalogue, with ads.",
     review:
@@ -181,6 +184,7 @@ const EN_SERVICES = {
     bestFor: "Library card holders who want variety",
   },
   "crunchyroll-free": {
+    name: "Crunchyroll (free tier)",
     availability: "Free tier in many countries, though it is shrinking",
     tagline: "The biggest anime library — a limited free slice with ads.",
     review:
