@@ -25,6 +25,11 @@ PAGES = [
 ]
 
 
+def slug_of(filename):
+    """Extension-less URL: the host redirects /x.html to /x."""
+    return filename[:-5] if filename.endswith(".html") else filename
+
+
 def bn_num(n):
     return str(n).translate(str.maketrans("0123456789", "০১২৩৪৫৬৭৮৯"))
 
@@ -41,6 +46,7 @@ for filename, region, bn_name, en_name in PAGES:
         f"{n} legal, genuinely free streaming services that work in {en_name} "
         "— with ratings, reviews and search."
     )
+    url = BASE + slug_of(filename)
     html = tpl
     html = re.sub(r"<title>.*?</title>", f"<title>{title_en}</title>", html, count=1, flags=re.S)
     html = re.sub(
@@ -51,13 +57,13 @@ for filename, region, bn_name, en_name in PAGES:
     )
     html = re.sub(
         r'<link rel="canonical" href=".*?" />',
-        f'<link rel="canonical" href="{BASE}{filename}" />',
+        f'<link rel="canonical" href="{url}" />',
         html,
         count=1,
     )
     html = re.sub(
         r'<meta property="og:url" content=".*?" />',
-        f'<meta property="og:url" content="{BASE}{filename}" />',
+        f'<meta property="og:url" content="{url}" />',
         html,
         count=1,
     )
@@ -73,6 +79,18 @@ for filename, region, bn_name, en_name in PAGES:
         html,
         count=1,
     )
+    html = re.sub(
+        r'<meta name="twitter:title" content=".*?" />',
+        f'<meta name="twitter:title" content="{title_en}" />',
+        html,
+        count=1,
+    )
+    html = re.sub(
+        r'<meta name="twitter:description" content=".*?" />',
+        f'<meta name="twitter:description" content="{desc_en}" />',
+        html,
+        count=1,
+    )
     preset = (
         "<script>window.REGION_PRESET=%s;"
         "window.PAGE_TITLE={bn:%s,en:%s};</script>\n"
@@ -84,9 +102,9 @@ for filename, region, bn_name, en_name in PAGES:
 
 urls = [(BASE, "1.0", "daily")]
 for filename, region, _, _ in PAGES:
-    urls.append((BASE + filename, "0.9", "weekly"))
+    urls.append((BASE + slug_of(filename), "0.9", "weekly"))
 for sid in ids:
-    urls.append((BASE + "review.html?id=" + sid, "0.7", "monthly"))
+    urls.append((BASE + "review?id=" + sid, "0.7", "monthly"))
 
 parts = [
     '<?xml version="1.0" encoding="UTF-8"?>',
