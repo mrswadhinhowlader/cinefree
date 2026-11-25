@@ -1,0 +1,58 @@
+name: Sync site files from production
+
+# Keeps this repository identical to what is live on the site.
+# Runs after every push, every 6 hours, and on demand.
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-site
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch deployed files
+        run: |
+          set -euo pipefail
+          base="https://cinefree-04fpmp.freebuff.site"
+          fetch() { curl -fsSL --retry 4 --retry-delay 3 --max-time 60 "$base$1" -o "$2"; }
+
+          fetch "/" index.html
+          fetch "/review" review.html
+          fetch "/compare" compare.html
+          for page in bangladesh india usa uk canada australia europe; do
+            fetch "/$page" "$page.html"
+          done
+          for file in styles.css app.js analytics.js favorites.js ratings.js pwa.js \
+                      data.js data-en.js i18n.js theme.js review.js share.js \
+                      compare.js compare-page.js country.js \
+                      favicon.svg favicon.ico sitemap.xml robots.txt \
+                      manifest.webmanifest sw.js; do
+            fetch "/$file" "$file"
+          done
+
+      - name: Commit changes
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Repository already matches the live site."
+            exit 0
+          fi
+          git commit -m "Sync site files from production"
+          git push
